@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
@@ -21,22 +21,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private const string hightScoreKey = "HightScore";
+    private const string highScoreKey = "HighScore";
 
-    public int HightScore
+    public int HighScore
     {
         get
         {
-            return PlayerPrefs.GetInt(hightScoreKey, 0);
+            return PlayerPrefs.GetInt(highScoreKey, 0);
         }
         set
         {
-            PlayerPrefs.SetInt(hightScoreKey, value);
+            PlayerPrefs.SetInt(highScoreKey, value);
         }
     }
 
     public int CurrentScore { get; set; }
     public bool IsInitialized { get; set; }
+
 
     private void Init()
     {
@@ -51,9 +52,9 @@ public class GameManager : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(MainMenu);
     }
-    public void GoToGamplay()
+
+    public void GoToGameplay()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(Gameplay);
     }
-
 }

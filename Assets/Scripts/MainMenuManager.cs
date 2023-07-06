@@ -8,10 +8,9 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private TMP_Text _scoreText;
     [SerializeField] private TMP_Text _newBestText;
     [SerializeField] private TMP_Text _bestScoreText;
-
     private void Awake()
     {
-        _bestScoreText.text = GameManager.Instance.HightScore.ToString();
+        _bestScoreText.text = GameManager.Instance.HighScore.ToString();
 
         if (!GameManager.Instance.IsInitialized)
         {
@@ -23,6 +22,7 @@ public class MainMenuManager : MonoBehaviour
             StartCoroutine(ShowScore());
         }
     }
+
     [SerializeField] private float _animationTime;
     [SerializeField] private AnimationCurve _speedCurve;
 
@@ -32,33 +32,43 @@ public class MainMenuManager : MonoBehaviour
         _scoreText.text = tempScore.ToString();
 
         int currentScore = GameManager.Instance.CurrentScore;
-        int hightScore = GameManager.Instance.HightScore;
+        int highScore = GameManager.Instance.HighScore;
 
-        if(currentScore > hightScore)
+        if (currentScore > highScore)
         {
             _newBestText.gameObject.SetActive(true);
-            GameManager.Instance.HightScore = currentScore;
+            GameManager.Instance.HighScore = currentScore;
         }
         else
         {
             _newBestText.gameObject.SetActive(false);
-            
         }
+
         float speed = 1 / _animationTime;
         float timeElapsed = 0f;
-        while(timeElapsed < 1f)
+        while (timeElapsed < 1f)
         {
             timeElapsed += speed * Time.deltaTime;
+
             tempScore = (int)(_speedCurve.Evaluate(timeElapsed) * currentScore);
+            _scoreText.text = tempScore.ToString();
+
+            yield return null;
         }
 
-        yield return null;
+        tempScore = currentScore;
+        _scoreText.text = tempScore.ToString();
     }
+
     [SerializeField] private AudioClip _clickSound;
 
-    public void clickedPlay()
+    public void ClickedPlay()
     {
         SoundManager.Instance.PlaySound(_clickSound);
-        GameManager.Instance.GoToGamplay();
+        GameManager.Instance.GoToGameplay();
     }
+
+
+
+
 }
